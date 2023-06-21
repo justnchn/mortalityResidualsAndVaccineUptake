@@ -1,0 +1,18 @@
+README
+
+Overview:
+This Rscript has multiple files that work to create dataframes containing county and state level data for all cause and circulatory mortalities. State residuals are created to represent the aggregate of counties that are not represented throughout the data in the county level datasets. All datasets include mortality data, vaccine uptake data, county population, and covid deaths. Each code file's functionalities are defined below. Residuals in this file are calculated by first summing  totals of non-residual counties (counties with data for each month in the vaccineUptake set and data for each month in the CDC Wonder mortality set) by state for all months and then summing the totals for all counties represented in the CDC Wonder mortality set (residual and non-residual) and then subtracting the two from each other.
+
+functions.R: contains all custom functions written to simplify code and perform repeated actions, including the summation of data, switching state abbreviations to state names, etc.
+
+allCauseAndCirculatory.R: reads in circulatory and allCause mortality data from CDC wonder from 2018-2021 and cleans the datasets. Also calculates state residuals and removes any counties that are not represented throughout all months in the dataset.
+
+vaccineUptake.R: adds vaccineUptake data to the circulatory and allCause mortality datasets and calculates residuals for vaccineUptake, including series complete data and administered dose 1 data.
+
+addingPopulation.R: reads in countyPopulation by year from the US census and merges it into our larger dataset by matching counties/residuals using the FIPS column
+
+addingCovidDeath.R: reads in covid death and case data by county and date from the New York Times and calculates residual values for these variables. It then merges this data onto our larger dataframe by FIPS code.
+
+stateData.R: creates dataframes using provisional 2022 and 2023 data from CDC wonder. Reads in data with allCause and circulatory mortality and joins in state level vaccineUptake data.
+
+testing.R: used to complete checks on the data throughout all merges to ensure that value totals are consistent throughout all merges
