@@ -15,12 +15,12 @@ removeMissingCounties <- function(df) {
 calculateDeathsStateMonth <- function(df) {
   # extract state and month from county and month columns
   df$State <- gsub(".*,\\s+", "", df$County)
-
+  
   # group data by state and month and sum deaths
   summarizedData <- df %>%
     group_by(State, Month.Code) %>%
     summarize(Deaths = sum(Deaths))
-
+  
   return(summarizedData)
 }
 
@@ -86,23 +86,23 @@ insertUsAggregate <- function(df) {
 merge_counties <- function(df, fips_codes) {
   # Extract rows with matching FIPS codes
   matching_counties <- df[df$FIPS %in% fips_codes, ]
-
+  
   # Extract rows without matching FIPS codes
   non_matching_counties <- df[!df$FIPS %in% fips_codes, ]
-
+  
   # Group non-matching counties by state and date, and sum the doses administered
   non_matching_counties <- non_matching_counties %>%
     group_by(Date, Recip_State) %>%
     summarise(Administered_Dose1_Recip_18Plus = sum(Administered_Dose1_Recip_18Plus, na.rm = TRUE),
               Administered_Dose1_Recip_65Plus = sum(Administered_Dose1_Recip_65Plus, na.rm = TRUE)) %>%
     ungroup()
-
+  
   non_matching_counties$FIPS <- NA
   non_matching_counties$Recip_County <- NA
-
+  
   # Combine matching and non-matching counties
   combined_counties <- rbind(matching_counties, non_matching_counties)
-
+  
   return(combined_counties)
 }
 
