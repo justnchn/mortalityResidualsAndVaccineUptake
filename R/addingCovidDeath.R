@@ -89,7 +89,7 @@ covidDeathStateTotals <- read.csv("~/Desktop/Research/us-states.csv")
 covidDeathStateTotals$Month.Code <- format(as.Date(covidDeathStateTotals$date), "%Y/%m")
 covidDeathStateTotals <- covidDeathStateTotals %>%
   group_by(Month.Code, state) %>%
-  summarize(across(cases:deaths, sum))
+  filter(date == max(date))
 
 allCauseStatesWithCovidDeath <- allCauseStatesWithVaccineUptake %>%
   left_join(covidDeathStateTotals, by = c("Month.Code", "State" = "state"))
@@ -101,4 +101,3 @@ circulatoryStatesWithCovidDeath[is.na(circulatoryStatesWithCovidDeath)] <- 0
 
 write.csv(allCauseStatesWithCovidDeath, "~/Desktop/Research/allCauseStatesWithCovidDeaths.csv")
 write.csv(circulatoryStatesWithCovidDeath, "~/Desktop/Research/circulatoryWithCovidDeaths.csv")
-
