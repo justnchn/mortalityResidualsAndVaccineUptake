@@ -30,5 +30,8 @@ population2022$State <- sub("^\\.", "", population2022$State)
 allCauseMortality2223WithPopulation <- left_join(allCauseMortality2223, population2022, by = c("State", "Year"))
 circulatoryMortality2223WithPopulation <- left_join(circulatoryMortality2223, population2022, by = c("State", "Year"))
 
-write.csv(allCauseMortality2223WithPopulation, "~/Desktop/Research/stateAllCauseMortality2023.csv")
-write.csv(circulatoryMortality2223WithPopulation, "~/Desktop/Research/stateCirculatoryMortality2023.csv")
+allCauseMortalityWithCovidDeaths <- left_join(allCauseMortality2223WithPopulation, covidDeathStateTotals, by = c("Month.Code", "State" = "state"))
+circulatoryMortalityWithCovidDeaths <- left_join(circulatoryMortality2223WithPopulation, covidDeathStateTotals, by = c("Month.Code", "State" = "state"))
+
+write.csv(allCauseMortalityWithCovidDeaths, "~/Desktop/Research/stateAllCauseMortality2023.csv")
+write.csv(circulatoryMortalityWithCovidDeaths, "~/Desktop/Research/stateCirculatoryMortality2023.csv")
