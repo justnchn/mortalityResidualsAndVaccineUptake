@@ -4,4 +4,4 @@ source("~/Desktop/Research/mortalityResidualsAndVaccineUptake/R/vaccineUptake.R"
 source("~/Desktop/Research/mortalityResidualsAndVaccineUptake/R/addingPopulation.R")
 source("~/Desktop/Research/mortalityResidualsAndVaccineUptake/R/addingCovidDeath.R")
 source("~/Desktop/Research/mortalityResidualsAndVaccineUptake/R/stateData.R")
-source("~/Desktop/Research/mortalityResidualsAndVaccineUptake/R/testing.R")
+source("~/Desktop/Research/mortalityResidualsAndVaccineUptake/R/Testing.R")
