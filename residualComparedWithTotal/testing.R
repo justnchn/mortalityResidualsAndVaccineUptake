@@ -1,80 +1,85 @@
-# read in covid death data
-covidDeath2020 <- read.csv("~/Desktop/Research/us-counties-2020.csv")
-covidDeath2021 <- read.csv("~/Desktop/Research/us-counties-2021.csv")
+# checking allCause death totals
+allCauseNonResidualDeaths <- sum(allCauseAllYearsFiltered[allCauseAllYearsFiltered$Month.Code == "2021/12", ]$Deaths)
+allCauseResidualDeaths <- sum(allCauseCountyResiduals[allCauseCountyResiduals$Month.Code == "2021/12", ]$Deaths)
+allCauseDeathTotal <- sum(allCauseStates[allCauseStates$Month.Code == "2021/12", ]$Deaths)
+allCauseResultDeathTotal <- sum(result[result$Month.Code == "2021/12", ]$Deaths)
+assertthat::are_equal(allCauseNonResidualDeaths + allCauseResidualDeaths, allCauseResultDeathTotal, allCauseDeathTotal)
 
-# bind the two datasets and create Month.Code column formatted as yyyy/mm
-covidDeathAllYears <- rbind(covidDeath2020, covidDeath2021)
-covidDeathAllYears$Month.Code <- format(as.Date(covidDeathAllYears$date), "%Y/%m")
+# checking circulatory death totals 
+circulatoryNonResidualDeaths <- sum(circulatoryAllYearsFiltered[circulatoryAllYearsFiltered$Month.Code == "2021/12", ]$Deaths)
+circulatoryResidualDeaths <- sum(circulatoryCountyResiduals[circulatoryCountyResiduals$Month.Code == "2021/12", ]$Deaths)
+circulatoryDeathTotal <- sum(circulatoryStates[circulatoryStates$Month.Code == "2021/12", ]$Deaths)
+circulatoryResultDeathTotal <- sum(resultCirculatory[resultCirculatory$Month.Code == "2021/12", ]$Deaths)
+assertthat::are_equal(circulatoryResidualDeaths + circulatoryNonResidualDeaths, circulatoryDeathTotal, circulatoryResultDeathTotal)
 
-# filtering the dataset such that for each county, only the most recent entry in a given yyyy/mm remains
-covidDeathAllYears <- covidDeathAllYears %>% group_by(Month.Code, fips) %>%
-  filter(date == max(date)) %>%
-  ungroup()
+# checking allCause administered dose 1 totals
+allCauseNonResidualAdminsteredDose1 <- sum(allCauseNonResidual[allCauseNonResidual$Date == "2021-12-31", ]$Administered_Dose1_18_to_65)
+allCauseResidualAdminsteredDose1 <- sum(allCauseUptakeResiduals[allCauseUptakeResiduals$Date == "2021-12-31", ]$Administered_Dose1_18_to_65)
+allCauseAdminsteredDose1Total <- sum(vaccineUptakeWithAllCauseResidualsCut[vaccineUptakeWithAllCauseResidualsCut$Date == "2021-12-31", ]$Administered_Dose1_18_to_65)
+resultAdministeredDose1 <- sum(result[result$Month.Code == "2021/12", ]$Administered_Dose1_18_to_65)
+assertthat::are_equal(allCauseNonResidualAdminsteredDose1 + allCauseResidualAdminsteredDose1, allCauseAdminsteredDose1Total, resultAdministeredDose1)
 
-# calculating state level covid death and cases
-stateCovidDeath <- covidDeathAllYears %>%
-  subset(select = -c(county, fips)) %>%
-  group_by(Month.Code, state) %>%
-  summarise(cases = sum(cases), deaths = sum(deaths))
+# checking allCause seriesComplete totals
+allCauseNonResidualSeriesComplete <- sum(allCauseNonResidual[allCauseNonResidual$Date == "2021-12-31", ]$Series_Complete_18_to_65)
+allCauseResidualSeriesComplete <- sum(allCauseUptakeResiduals[allCauseUptakeResiduals$Date == "2021-12-31", ]$Series_Complete_18_to_65)
+allCauseSeriesCompleteTotal <- sum(vaccineUptakeWithAllCauseResidualsCut[vaccineUptakeWithAllCauseResidualsCut$Date == "2021-12-31", ]$Series_Complete_18_to_65)
+resultSeriesComplete <- sum(result[result$Month.Code == "2021/12", ]$Series_Complete_18_to_65)
+assertthat::are_equal(allCauseNonResidualSeriesComplete + allCauseResidualSeriesComplete, allCauseSeriesCompleteTotal, resultSeriesComplete)
 
-# calculating allCause nonresidual county deaths
-covidDeathAllYearsAllCauseNonResidualCounties <- covidDeathAllYears[covidDeathAllYears$fips %in% result$County.Code, ]
-covidDeathAllYearsAllCauseNonResidual <- covidDeathAllYearsAllCauseNonResidualCounties %>%
-  subset(select = c(Month.Code, state, cases, deaths)) %>%
-  group_by(Month.Code, state) %>%
-  summarize(across(cases:deaths, sum))
+# checking circulatory administered dose 1 totals
+circulatoryNonResidualAdminsteredDose1 <- sum(circulatoryNonResidual[circulatoryNonResidual$Date == "2021-12-31", ]$Administered_Dose1_18_to_65)
+circulatoryResidualAdminsteredDose1 <- sum(circulatoryUptakeResiduals[circulatoryUptakeResiduals$Date == "2021-12-31", ]$Administered_Dose1_18_to_65)
+circulatoryAdminsteredDose1Total <- sum(vaccineUptakeWithCirculatoryResidualsCut[vaccineUptakeWithCirculatoryResidualsCut$Date == "2021-12-31", ]$Administered_Dose1_18_to_65)
+circulatoryAdministeredDose1 <- sum(resultCirculatory[resultCirculatory$Month.Code == "2021/12", ]$Administered_Dose1_18_to_65)
+assertthat::are_equal(circulatoryNonResidualAdminsteredDose1 + circulatoryResidualAdminsteredDose1, circulatoryAdminsteredDose1Total, circulatoryAdministeredDose1)
 
-# calculating allCause covid death resiudals
-covidDeathAllCauseResiduals <- left_join(stateCovidDeath, covidDeathAllYearsAllCauseNonResidual, by = c("Month.Code", "state"))
-covidDeathAllCauseResiduals[is.na(covidDeathAllCauseResiduals)] <- 0
-covidDeathAllCauseResiduals$covid_deaths <- covidDeathAllCauseResiduals$deaths.x - covidDeathAllCauseResiduals$deaths.y
-covidDeathAllCauseResiduals$covid_cases <- covidDeathAllCauseResiduals$cases.x - covidDeathAllCauseResiduals$cases.y
-covidDeathAllCauseResiduals$fips <- covidDeathAllCauseResiduals$state
-covidDeathAllCauseResiduals <- covidDeathAllCauseResiduals %>%
-  subset(select = c(Month.Code, fips, state, covid_deaths, covid_cases))
+# checking circulatory series complete totals
+circulatoryNonResidualSeriesComplete <- sum(circulatoryNonResidual[circulatoryNonResidual$Date == "2021-12-31", ]$Series_Complete_18_to_65)
+circulatoryResidualSeriesComplete <- sum(circulatoryUptakeResiduals[circulatoryUptakeResiduals$Date == "2021-12-31", ]$Series_Complete_18_to_65)
+circulatorySeriesCompleteTotal <- sum(vaccineUptakeWithCirculatoryResidualsCut[vaccineUptakeWithCirculatoryResidualsCut$Date == "2021-12-31", ]$Series_Complete_18_to_65)
+circulatorySeriesComplete <- sum(resultCirculatory[resultCirculatory$Month.Code == "2021/12", ]$Series_Complete_18_to_65)
+assertthat::are_equal(circulatoryNonResidualSeriesComplete + circulatoryResidualSeriesComplete, circulatorySeriesCompleteTotal, circulatorySeriesComplete)
 
-# calculating circulatory nonresidual county deaths
-covidDeathAllYearsCirculatoryNonResidualCounties <- covidDeathAllYears[covidDeathAllYears$fips %in% resultCirculatory$County.Code, ]
-covidDeathAllYearsCirculatoryNonResidual <- covidDeathAllYearsCirculatoryNonResidualCounties %>%
-  subset(select = c(Month.Code, state, cases, deaths)) %>%
-  group_by(Month.Code, state) %>%
-  summarize(across(cases:deaths, sum))
+# checking allCause population totals
+allCauseNonResidualPopulation <- sum(countyPopulationAllCauseNonResidual[countyPopulationAllCauseNonResidual$YEAR == "2021", ]$AGE18TO65)
+allCauseResidualPopulation <- sum(countyPopulationAllCauseResiduals[countyPopulationAllCauseResiduals$YEAR == "2021", ]$AGE18TO65)
+allCauseTotalPopulation <- sum(countyPopulationAllYearsWithAllCauseResiduals[countyPopulationAllYearsWithAllCauseResiduals$YEAR == "2021", ]$AGE18TO65)
+allCauseResultPopulation <- sum(result[result$Month.Code == "2021/12", ]$AGE18TO65)
+assertthat::are_equal(allCauseNonResidualPopulation + allCauseResidualPopulation, allCauseTotalPopulation, allCauseResultPopulation)
 
-# calculating circulatory covid death resiudals
-covidDeathCirculatoryResiduals <- left_join(stateCovidDeath, covidDeathAllYearsCirculatoryNonResidual, by = c("Month.Code", "state"))
-covidDeathCirculatoryResiduals[is.na(covidDeathCirculatoryResiduals)] <- 0
-covidDeathCirculatoryResiduals$covid_deaths <- covidDeathCirculatoryResiduals$deaths.x - covidDeathCirculatoryResiduals$deaths.y
-covidDeathCirculatoryResiduals$covid_cases <- covidDeathCirculatoryResiduals$cases.x - covidDeathCirculatoryResiduals$cases.y
-covidDeathCirculatoryResiduals$fips <- covidDeathCirculatoryResiduals$state
-covidDeathCirculatoryResiduals <- covidDeathCirculatoryResiduals %>%
-  subset(select = c(Month.Code, fips, state, covid_deaths, covid_cases)) 
+# checking circulatory population totals
+circulatoryNonResidualPopulation <- sum(countyPopulationCirculatoryNonResidual[countyPopulationCirculatoryNonResidual$YEAR == "2021", ]$AGE18TO65)
+circulatoryResidualPopulation <- sum(countyPopulationCirculatoryResiduals[countyPopulationCirculatoryResiduals$YEAR == "2021", ]$AGE18TO65)
+circulatoryTotalPopulation <- sum(countyPopulationAllYearsWithCirculatoryResiduals[countyPopulationAllYearsWithCirculatoryResiduals$YEAR == "2021", ]$AGE18TO65)
+circulatoryResultPopulation <- sum(resultCirculatory[resultCirculatory$Month.Code == "2021/12", ]$AGE18TO65)
+assertthat::are_equal(circulatoryNonResidualPopulation + circulatoryResidualPopulation, circulatoryTotalPopulation, circulatoryResultPopulation)
 
-# changing columns in all cause county death dataframe and binding with residual totals
-covidDeathAllYearsAllCauseWithResidual <- covidDeathAllYearsAllCauseNonResidualCounties %>%
-  rename(covid_cases = cases, covid_deaths = deaths) %>%
-  subset(select = c(Month.Code, fips, state, covid_deaths, covid_cases)) %>%
-  rbind(covidDeathAllCauseResiduals) %>%
-  select(-state)
+# checking allCause covid death totals
+allCauseNonResidualCovidDeaths <- sum(covidDeathAllYearsAllCauseNonResidual[covidDeathAllYearsAllCauseNonResidual$Month.Code == "2021/12", ]$deaths)
+allCauseResidualCovidDeaths <- sum(covidDeathAllCauseResiduals[covidDeathAllCauseResiduals$Month.Code == "2021/12", ]$covid_deaths)
+allCauseTotalCovidDeaths <- sum(covidDeathAllYearsAllCauseWithResidual[covidDeathAllYearsAllCauseWithResidual$Month.Code == "2021/12", ]$covid_deaths)
+resultTotalCovidDeaths <- sum(resultWithCovidDeaths[resultWithCovidDeaths$Month.Code == "2021/12", ]$covid_deaths)
+assertthat::are_equal(allCauseNonResidualCovidDeaths + allCauseResidualCovidDeaths, allCauseTotalCovidDeaths, resultTotalCovidDeaths)
 
-# changing columns in circulatory county death dataframe and binding with residual totals
-covidDeathAllYearsCirculatoryWithResidual <- covidDeathAllYearsCirculatoryNonResidualCounties %>%
-  rename(covid_cases = cases, covid_deaths = deaths) %>%
-  subset(select = c(Month.Code, fips, state, covid_deaths, covid_cases)) %>%
-  rbind(covidDeathCirculatoryResiduals) %>%
-  select(-state)
+# checking allCause covid case totals
+allCauseNonResidualCovidCases <- sum(covidDeathAllYearsAllCauseNonResidual[covidDeathAllYearsAllCauseNonResidual$Month.Code == "2021/12", ]$cases)
+allCauseResidualCovidCases <- sum(covidDeathAllCauseResiduals[covidDeathAllCauseResiduals$Month.Code == "2021/12", ]$covid_cases)
+allCauseTotalCovidCases <- sum(covidDeathAllYearsAllCauseWithResidual[covidDeathAllYearsAllCauseWithResidual$Month.Code == "2021/12", ]$covid_cases)
+resultTotalCovidCases <- sum(resultWithCovidDeaths[resultWithCovidDeaths$Month.Code == "2021/12", ]$covid_cases)
+assertthat::are_equal(allCauseNonResidualCovidCases + allCauseResidualCovidCases, allCauseTotalCovidCases, resultTotalCovidCases)
 
-# left joining the covid death totals with result dataframes
-resultWithCovidDeaths <- result %>%
-  left_join(covidDeathAllYearsAllCauseWithResidual, by = c("County.Code" = "fips", "Month.Code"))
-resultWithCovidDeaths$covid_deaths[is.na(resultWithCovidDeaths$covid_deaths)] <- 0
-resultWithCovidDeaths$covid_cases[is.na(resultWithCovidDeaths$covid_cases)] <- 0
+# checking circulatory covid death totals
+circulatoryNonResidualCovidDeaths <- sum(covidDeathAllYearsCirculatoryNonResidual[covidDeathAllYearsCirculatoryNonResidual$Month.Code == "2021/12", ]$deaths)
+circulatoryResidualCovidDeaths <- sum(covidDeathCirculatoryResiduals[covidDeathCirculatoryResiduals$Month.Code == "2021/12", ]$covid_deaths)
+circulatoryTotalCovidDeaths <- sum(covidDeathAllYearsCirculatoryWithResidual[covidDeathAllYearsCirculatoryWithResidual$Month.Code == "2021/12", ]$covid_deaths)
+circulatoryResultTotalCovidDeaths <- sum(resultCirculatoryWithCovidDeaths[resultCirculatoryWithCovidDeaths$Month.Code == "2021/12", ]$covid_deaths)
+assertthat::are_equal(circulatoryNonResidualCovidDeaths + circulatoryResidualCovidDeaths, circulatoryTotalCovidDeaths, circulatoryResultTotalCovidDeaths)
 
-resultCirculatoryWithCovidDeaths <- resultCirculatory %>%
-  left_join(covidDeathAllYearsCirculatoryWithResidual, by = c("County.Code" = "fips", "Month.Code"))
-resultCirculatoryWithCovidDeaths$covid_deaths[is.na(resultCirculatoryWithCovidDeaths$covid_deaths)] <- 0
-resultCirculatoryWithCovidDeaths$covid_cases[is.na(resultCirculatoryWithCovidDeaths$covid_cases)] <- 0
+# checking circulatory covid case totals
+circulatoryNonResidualCovidCases <- sum(covidDeathAllYearsCirculatoryNonResidual[covidDeathAllYearsCirculatoryNonResidual$Month.Code == "2021/12", ]$cases)
+circulatoryResidualCovidCases <- sum(covidDeathCirculatoryResiduals[covidDeathCirculatoryResiduals$Month.Code == "2021/12", ]$covid_cases)
+circulatoryTotalCovidCases <- sum(covidDeathAllYearsCirculatoryWithResidual[covidDeathAllYearsCirculatoryWithResidual$Month.Code == "2021/12", ]$covid_cases)
+circulatoryResultTotalCovidCases <- sum(resultCirculatoryWithCovidDeaths[resultCirculatoryWithCovidDeaths$Month.Code == "2021/12", ]$covid_cases)
+assertthat::are_equal(circulatoryNonResidualCovidCases + circulatoryResidualCovidCases, circulatoryTotalCovidCases, circulatoryResultTotalCovidCases)
 
-# exporting circulatory results and circulatory vaccine uptake
-write.csv(resultWithCovidDeaths, "~/Desktop/Research/allCauseOldResidualWithCovidDeaths.csv")
-write.csv(resultCirculatoryWithCovidDeaths, "~/Desktop/Research/circulatoryOldResidualWithCovidDeaths.csv")
 
