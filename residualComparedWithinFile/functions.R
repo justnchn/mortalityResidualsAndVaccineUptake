@@ -50,7 +50,11 @@ changeToStateNames <- function(df) {
     select(-State.y)
 }
 
-
+# Function that changes state names to state abbreviation
+changeToStateAbbrev <- function(df) {
+  df <- left_join(df, state_lookup, by = c("state" = "State")) %>%
+    select(-state)
+}
 
 # function that removes any rows that have empty values in a given column
 removeEmptyRows <- function(df, colName) {
