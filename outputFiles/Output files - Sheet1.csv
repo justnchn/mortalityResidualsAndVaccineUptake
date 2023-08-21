@@ -1,0 +1,133 @@
+File Name,Description,Variables in File
+allCauseOldResidualWithCovidDeaths.csv,"This file contains all cause mortality, covid mortality*, covid case*, population*, and vaccine uptake* data at the county level monthly from 2018-2021. Residuals in this file are calculated by subtracting the difference between totals in state data for each respective variable by the sum of all counties represented throughout the data (counties with entries in every month for all cause mortality and vaccine uptake) for the given variable. 
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census","County - name of the county for this entry, with state acronym following it
+County.Code - FIPS code for the county
+Administered_Dose1_18_to_65 - the amount of first dose COVID vaccines administered in this county at the given date (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in this county at the given date
+Month.Code - the month and year of the entry (YYYY/MM) 
+Deaths - the number of deaths from all causes in the county during the given month
+Month - month of the entry
+Year- year of the entry
+CTYNAME - name of the county without state acronym
+STNAME - state of that the county is in
+AGE18TO65 - population of the county that is aged 18-65
+covid_deaths - number of covid deaths that have occurred in the given county up to that month (cumulative)
+covid_cases - number of covid cases that have occurred in the given county up to that month (cumulative)"
+allCauseStatesWithCovidDeaths.csv,"This file contains all cause mortality, covid mortality, covid case, population, and vaccine uptake data at the state level monthly from 2018-2021
+
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census","State - the state for which the data in the row is for 
+Month.Code - month and year of the entry (YYYY/MM)
+Deaths - the number of deaths from all causes in that month
+Administered_Dose1_18_to_65 - the number of first dose COVID vaccines administered in that state at that given time (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in that state at that given time
+Population - population of the state aged 18-65 (not updated by month, US census lists July 1st estimate for every year)
+date - date used for the administered_dose_1 and series_complete entry (this data was listed daily, so the last date in every month was used)
+fips - state fips code
+cases - cumulative covid cases in the given state up to that point
+deaths - cumulative covid deaths in the given state up to that point"
+allCauseWithCovidDeaths.csv,"This file contains all cause mortality, covid mortality*, covid case*, population*, and vaccine uptake* data at the county level monthly from 2018-2021. Residuals in this file are calculated by subtracting the difference between he sum of all counties in the data by the sum of all counties having an entry for every month in the all cause mortality and vaccine uptake datasets (counties with no ""missing data"") across all dates for each variable.  
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census","County - name of the county for this entry, with state acronym following it
+County.Code - FIPS code for the county
+Administered_Dose1_18_to_65 - the amount of first dose COVID vaccines administered in this county at the given date (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in this county at the given date
+Month.Code - the month and year of the entry (YYYY/MM) 
+Deaths - the number of deaths from all causes in the county during the given month
+Month - month of the entry
+Year- year of the entry
+CTYNAME - name of the county without state acronym
+STNAME - state of that the county is in
+AGE18TO65 - population of the county that is aged 18-65
+covid_deaths - number of covid deaths that have occurred in the given county up to that month (cumulative)
+covid_cases - number of covid cases that have occurred in the given county up to that month (cumulative)"
+circulatoryOldResidualWithCovidDeaths.csv,"This file contains circulatory mortality, covid mortality*, covid case*, population*, and vaccine uptake* data at the county level monthly from 2018-2021. Residuals in this file are calculated by subtracting the difference between totals in state data for each respective variable by the sum of all counties represented throughout the data (counties with entries in every month for all cause mortality and vaccine uptake) for the given variable. 
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census","County - name of the county for this entry, with state acronym following it
+County.Code - FIPS code for the county
+Administered_Dose1_18_to_65 - the amount of first dose COVID vaccines administered in this county at the given date (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in this county at the given date
+Month.Code - the month and year of the entry (YYYY/MM) 
+Deaths - the number of deaths from circulatory causes in the county during the given month
+Month - month of the entry
+Year- year of the entry
+CTYNAME - name of the county without state acronym
+STNAME - state of that the county is in
+AGE18TO65 - population of the county that is aged 18-65
+covid_deaths - number of covid deaths that have occurred in the given county up to that month (cumulative)
+covid_cases - number of covid cases that have occurred in the given county up to that month (cumulative)"
+circulatoryStatesWithCovidDeaths.csv,"This file contains circulatory mortality, covid mortality, covid case, population, and vaccine uptake data at the state level monthly from 2018-2021
+
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census","State - the state for which the data in the row is for 
+Month.Code - month and year of the entry (YYYY/MM)
+Deaths - the number of deaths from circulatory causes in that month
+Administered_Dose1_18_to_65 - the number of first dose COVID vaccines administered in that state at that given time (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in that state at that given time
+Population - population of the state aged 18-65 (not updated by month, US census lists July 1st estimate for every year)
+date - date used for the administered_dose_1 and series_complete entry (this data was listed daily, so the last date in every month was used)
+fips - state fips code
+cases - cumulative covid cases in the given state up to that point
+deaths - cumulative covid deaths in the given state up to that point"
+circulatoryWithCovidDeaths.csv,"This file contains circulatory mortality, covid mortality*, covid case*, population*, and vaccine uptake* data at the county level monthly from 2018-2021. Residuals in this file are calculated by subtracting the difference between he sum of all counties in the data by the sum of all counties having an entry for every month in the all cause mortality and vaccine uptake datasets (counties with no ""missing data"") across all dates for each variable.  
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census","County - name of the county for this entry, with state acronym following it
+County.Code - FIPS code for the county
+Administered_Dose1_18_to_65 - the amount of first dose COVID vaccines administered in this county at the given date (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in this county at the given date
+Month.Code - the month and year of the entry (YYYY/MM) 
+Deaths - the number of deaths from circulatory causes in the county during the given month
+Month - month of the entry
+Year- year of the entry
+CTYNAME - name of the county without state acronym
+STNAME - state of that the county is in
+AGE18TO65 - population of the county that is aged 18-65
+covid_deaths - number of covid deaths that have occurred in the given county up to that month (cumulative)
+covid_cases - number of covid cases that have occurred in the given county up to that month (cumulative)"
+stateAllCauseMortality2023.csv,"This file contains all cause mortality, covid mortality, covid case, population, and vaccine uptake data at the state level monthly from 2022-March 2023
+
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census, no population data for 2023 was avaliable so values are NA","State - the state for which the data in the row is for
+Year - year of the entry
+Month.Code - month and year of the entry (YYYY/MM)
+Deaths - the number of deaths from all causes in that month
+Months - month of the entry
+Administered_Dose1_18_to_65 - the number of first dose COVID vaccines administered in that state at that given time (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in that state at that given time
+Population - population of the state aged 18-65 (not updated by month, US census lists July 1st estimate for every year)
+date - date used for the administered_dose_1 and series_complete entry (this data was listed daily, so the last date in every month was used)
+fips - state fips code
+cases - cumulative covid cases in the given state up to that point
+deaths - cumulative covid deaths in the given state up to that point"
+stateCirculatoryMortality2023.csv,"This file contains circulatory mortality, covid mortality, covid case, population, and vaccine uptake data at the state level monthly from 2022-March 2023
+
+
+* Vaccine uptake data was reported daily in input file, monthly entries in this dataset are from the last day of the respective month
+* Same for covid mortailty and cases, entries listed daily, but last date in each month used
+* Population data was reported yearly on July 1st in the US Census, no population data for 2023 was avaliable so values are NA","State - the state for which the data in the row is for
+Year - year of the entry
+Month.Code - month and year of the entry (YYYY/MM)
+Deaths - the number of deaths from circulatory causes in that month
+Months - month of the entry
+Administered_Dose1_18_to_65 - the number of first dose COVID vaccines administered in that state at that given time (cumulative)
+Series_Complete_18_to_65 - the number of completed COVID vaccine series administered in that state at that given time
+Population - population of the state aged 18-65 (not updated by month, US census lists July 1st estimate for every year)
+date - date used for the administered_dose_1 and series_complete entry (this data was listed daily, so the last date in every month was used)
+fips - state fips code
+cases - cumulative covid cases in the given state up to that point
+deaths - cumulative covid deaths in the given state up to that point"
