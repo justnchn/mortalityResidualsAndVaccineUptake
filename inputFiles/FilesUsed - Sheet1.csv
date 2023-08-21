@@ -1,0 +1,18 @@
+File Name,Description,Source,Access Date
+"All Cause Mortality (County + Month, 2018-2019).txt","County mortality from all causes, reported by month from 2018-2019",https://wonder.cdc.gov/ucd-icd10-expanded.html,2/4/2023
+"All Cause Mortality (County + Month, 2020-2021).txt","County mortality from all causes, reported by month from 2020-2021",https://wonder.cdc.gov/ucd-icd10-expanded.html,2/4/2023
+All Cause Mortality--State and Month.txt,State all cause mortality reported by month,https://wonder.cdc.gov/ucd-icd10-expanded.html,2/4/2023
+"Circulatory Disease Mortality (County + Month, 2018-2019).txt","County mortality from circulatory deaths, reported by month from 2018-2019",https://wonder.cdc.gov/ucd-icd10-expanded.html,2/4/2023
+"Circulatory Disease Mortality (County + Month, 2020-2021).txt","County mortality from circulatory deaths, reported by month from 2020-2021",https://wonder.cdc.gov/ucd-icd10-expanded.html,2/4/2023
+Circulatory Disease Mortality (State + Month).txt,State circulatory mortality reported by month,https://wonder.cdc.gov/ucd-icd10-expanded.html,2/4/2023
+COVID-19_Vaccinations_in_the_United_States_Jurisdiction.csv,"COVID-19 vaccine uptake data by state, reported weekly",https://healthdata.gov/dataset/COVID-19-Vaccine-Distribution-Allocations-by-Juris/86eu-w6d6,3/19/2023
+COVID-19_Vaccinations_in_the_United_States_County.csv,"COVID-19 vaccine uptake data by county, reported weekly",https://healthdata.gov/dataset/COVID-19-Vaccine-Distribution-Allocations-by-Juris/86eu-w6d6,3/19/2023
+us-counties-2020.csv,"COVID-19 deaths and cases in all counties in 2020, reported weekly",https://github.com/nytimes/covid-19-data,5/3/2023
+us-counties-2021.csv,"COVID-19 deaths and cases in all counties in 2021, reported daily",https://github.com/nytimes/covid-19-data,5/3/2023
+us-states.csv,"COVID-19 deaths and cases by state, reported daily",https://github.com/nytimes/covid-19-data,6/14/2023
+Single-Race Population Estimates 2010-2020 by State and Single-Year Age.txt,State population by year for 18-65 age cohort from 2010-2020,https://www.census.gov/programs-surveys/popest/technical-documentation/research/evaluation-estimates/2020-evaluation-estimates/2010s-state-total.html,4/25/2023
+Single-Race Population Estimates 2020-2021 by State and Single-Year Age.txt,State population by year for 18-65 age cohort from 2020-2021,https://www.census.gov/data/tables/time-series/demo/popest/2020s-state-total.html,4/25/2023
+2010-2019 County Census by State,Folder with files containing county population by state from 2010-2019,https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html,5/1/2023
+"Provisional Mortality Statistics, 2018 through Last Month.txt",Provisional allCause mortality counts for 2022 and 2023,https://wonder.cdc.gov/mcd-icd10-provisional.html,5/12/2023
+"Provisional Mortality Statistics, 2018 through Last Month Circulatory.txt",Provisional circulatory mortality counts for 2022 and 2023,https://wonder.cdc.gov/mcd-icd10-provisional.html,5/12/2023
+population2022.xlsx,2022 state population,https://www.census.gov/data/tables/time-series/demo/popest/2020s-state-total.html,6/5/2023
